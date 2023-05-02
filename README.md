@@ -6,7 +6,12 @@ Spring Boot CRUD example using Thymeleaf template engine for View layer and Spri
 - Java 11
 - Maven 3.8.6
 
-## Execution
+## Standalone Execution
+
+Copy the [src/main/resources/local.application.properties](src/main/resources/local.application.properties) to `src/main/resources/application.properties`
+```bash
+cp src/main/resources/local.application.properties src/main/resources/application.properties
+```
 
 Define properly the [src/main/resources/application.properties](src/main/resources/application.properties) after a postgres database is available
 ```vim
@@ -25,7 +30,24 @@ Run ```mvn spring-boot:run``` to run the application in default port 8080
 
 Visit [http://localhost:8080/tutorials](http://localhost:8080/tutorials) to see the application running and play with the functionality.
 
+## Docker Execution
+
+Copy the [src/main/resources/docker.application.properties](src/main/resources/docker.application.properties) to `src/main/resources/application.properties`
+```bash
+cp src/main/resources/docker.application.properties src/main/resources/application.properties
+```
+
+Build the docker image locally and run with docker-compose by running
+```bash
+./mvnw clean package -DskipTests # prerequisite so the needed jar can be created
+docker build -f nonroot.Dockerfile .
+docker-compose up
+```
+
+Visit [http://localhost:8080/tutorials](http://localhost:8080/tutorials) to see the application running and play with the functionality.
+
 ## Resources
-[https://www.bezkoder.com/spring-boot-thymeleaf-example/](https://www.bezkoder.com/spring-boot-thymeleaf-example/)
+[https://www.bezkoder.com/spring-boot-thymeleaf-example/](https://www.bezkoder.com/spring-boot-thymeleaf-example/)   
+[https://www.baeldung.com/spring-boot-postgresql-docker](https://www.baeldung.com/spring-boot-postgresql-docker)
 
 Copyright © BezKoder, [panagiotisbellias](mailto:belliaspan@gmail.com)
