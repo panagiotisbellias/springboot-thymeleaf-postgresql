@@ -60,9 +60,18 @@ public class TutorialController {
 
     @GetMapping("/tutorials/{id}")
     public String editTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-//  TODO  ...
+        try {
+            Tutorial tutorial = tutorialRepository.findById(id).get();
 
-        return "tutorial_form";
+            model.addAttribute("tutorial", tutorial);
+            model.addAttribute("pageTitle", "Edit Tutorial (ID: " + id + ")");
+
+            return "tutorial_form";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+
+            return "redirect:/tutorials";
+        }
     }
 
     @GetMapping("/tutorials/delete/{id}")
@@ -75,7 +84,16 @@ public class TutorialController {
     @GetMapping("/tutorials/{id}/published/{status}")
     public String updateTutorialPublishedStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean published,
                                                 Model model, RedirectAttributes redirectAttributes) {
-//  TODO  ...
+        try {
+            tutorialRepository.updatePublishedStatus(id, published);
+
+            String status = published ? "published" : "disabled";
+            String message = "The Tutorial id=" + id + " has been " + status;
+
+            redirectAttributes.addFlashAttribute("message", message);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
 
         return "redirect:/tutorials";
     }
