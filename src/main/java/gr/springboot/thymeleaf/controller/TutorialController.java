@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class TutorialController {
 
@@ -19,7 +22,14 @@ public class TutorialController {
 
     @GetMapping("/tutorials")
     public String getAll(Model model, @Param("keyword") String keyword) {
-//  TODO  ...
+        try {
+            List<Tutorial> tutorials = new ArrayList<Tutorial>();
+            tutorialRepository.findAll().forEach(tutorials::add);
+
+            model.addAttribute("tutorials", tutorials);
+        } catch (Exception e) {
+            model.addAttribute("message", e.getMessage());
+        }
 
         return "tutorials";
     }
