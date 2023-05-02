@@ -76,7 +76,13 @@ public class TutorialController {
 
     @GetMapping("/tutorials/delete/{id}")
     public String deleteTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
-//  TODO  ...
+        try {
+            tutorialRepository.deleteById(id);
+
+            redirectAttributes.addFlashAttribute("message", "The Tutorial with id=" + id + " has been deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
 
         return "redirect:/tutorials";
     }
