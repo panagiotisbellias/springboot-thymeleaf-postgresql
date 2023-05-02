@@ -36,14 +36,24 @@ public class TutorialController {
 
     @GetMapping("/tutorials/new")
     public String addTutorial(Model model) {
-//  TODO  ...
+        Tutorial tutorial = new Tutorial();
+        tutorial.setPublished(true);
+
+        model.addAttribute("tutorial", tutorial);
+        model.addAttribute("pageTitle", "Create new Tutorial");
 
         return "tutorial_form";
     }
 
     @PostMapping("/tutorials/save")
     public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
-//  TODO  ...
+        try {
+            tutorialRepository.save(tutorial);
+
+            redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+        }
 
         return "redirect:/tutorials";
     }
