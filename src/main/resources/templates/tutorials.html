@@ -26,6 +26,24 @@
     </button>
 </div>
 
+<div class="my-3">
+    <form th:action="@{/tutorials}">
+        <div class="row d-flex">
+            <div class="col-md-6 mt-2">
+                <div class="search">
+                    <i class="fa fa-search"></i>
+                    <input id="keyword" type="search" name="keyword" th:value="${keyword}" required class="form-control"
+                           placeholder="Enter keyword">
+                    <button type="submit" class="btn btn-secondary">Search</button>
+                </div>
+            </div>
+            <div class="col-md-6 mt-2">
+                <button id="btnClear" class="btn btn-info">Clear</button>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div th:if="${tutorials.size() > 0}">
     <table class="table table-hover table-responsive-xl">
         <thead class="thead-light">
@@ -80,23 +98,34 @@
                 </div>
             </div>
 
-            <script type="text/javascript">
-              $(document).ready(function () {
-                $(".btn-delete").on("click", function (e) {
-                  e.preventDefault();
-                  link = $(this);
-            
-                  tutorialTitle = link.attr("tutorialTitle");
-                  $("#yesBtn").attr("href", link.attr("href"));
-                  $("#confirmText").html("Do you want to delete the Tutorial \<strong\>" + tutorialTitle + "\<\/strong\>?");
-                  $("#confirmModal").modal();
-                });
-              });
-            </script>
+
         </tr>
         </tbody>
     </table>
 </div>
+
+<div class="" th:unless="${tutorials.size() > 0}">
+    <span>No tutorials found!</span>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(".btn-delete").on("click", function (e) {
+      e.preventDefault();
+      link = $(this);
+
+      tutorialTitle = link.attr("tutorialTitle");
+      $("#yesBtn").attr("href", link.attr("href"));
+      $("#confirmText").html("Do you want to delete the Tutorial \<strong\>" + tutorialTitle + "\<\/strong\>?");
+      $("#confirmModal").modal();
+    });
+    $("#btnClear").on("click", function (e) {
+      e.preventDefault();
+      $("#keyword").text("");
+      window.location = "[[@{/tutorials}]]";
+    });
+  });
+</script>
 
 
 <div th:replace="fragments/footer :: footer"></div>

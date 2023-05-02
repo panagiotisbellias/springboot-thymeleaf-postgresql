@@ -24,7 +24,13 @@ public class TutorialController {
     public String getAll(Model model, @Param("keyword") String keyword) {
         try {
             List<Tutorial> tutorials = new ArrayList<Tutorial>();
-            tutorialRepository.findAll().forEach(tutorials::add);
+
+            if (keyword == null) {
+                tutorialRepository.findAll().forEach(tutorials::add);
+            } else {
+                tutorialRepository.findByTitleContainingIgnoreCase(keyword).forEach(tutorials::add);
+                model.addAttribute("keyword", keyword);
+            }
 
             model.addAttribute("tutorials", tutorials);
         } catch (Exception e) {
