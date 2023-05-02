@@ -5,16 +5,16 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.6</version>
+		<version>2.7.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>gr.springboot</groupId>
-	<artifactId>thymeleaf</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>thymeleaf</name>
+	<artifactId>thymeleaf-demo</artifactId>
+	<version>1.0.0</version>
+	<name>thymeleaf-demo</name>
 	<description>Spring Boot CRUD example using Thymeleaf template engine for View layer and Spring Data JPA with Database</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

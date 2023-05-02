@@ -1,7 +1,7 @@
-package gr.springboot.thymeleaf.repository;
+package gr.springboot.thymeleaf.demo.repository;
 
-import gr.springboot.thymeleaf.entity.Tutorial;
-import jakarta.transaction.Transactional;
+import gr.springboot.thymeleaf.demo.entity.Tutorial;
+import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

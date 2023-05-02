@@ -1,7 +1,7 @@
-package gr.springboot.thymeleaf.controller;
+package gr.springboot.thymeleaf.demo.controller;
 
-import gr.springboot.thymeleaf.entity.Tutorial;
-import gr.springboot.thymeleaf.repository.TutorialRepository;
+import gr.springboot.thymeleaf.demo.entity.Tutorial;
+import gr.springboot.thymeleaf.demo.repository.TutorialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
