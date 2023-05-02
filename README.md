@@ -46,6 +46,14 @@ docker-compose up
 
 Visit [http://localhost:8080/tutorials](http://localhost:8080/tutorials) to see the application running and play with the functionality.
 
+### Vulnerabilities Scanning
+One way is through Docker like this
+```bash
+docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock --name Grype anchore/grype:latest belpanos/thymeleaf-demo:latest
+```
+
+The output is already thrown in [grype_vulnerabilities.txt](grype_vulnerabilities.txt)
+
 ## Resources
 [https://www.bezkoder.com/spring-boot-thymeleaf-example/](https://www.bezkoder.com/spring-boot-thymeleaf-example/)   
 [https://www.baeldung.com/spring-boot-postgresql-docker](https://www.baeldung.com/spring-boot-postgresql-docker)
