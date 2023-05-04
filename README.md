@@ -25,6 +25,14 @@ Run ```mvn spring-boot:run``` to run the application in default port 8080
 
 Visit [http://localhost:8080/tutorials](http://localhost:8080/tutorials) to see the application running and play with the functionality.
 
+## Code Analysis with SonarQube
+
+### Requirements
+
+- Sonarqube (standalone installation recommended) v8.5.1.38104
+
+Run ```mvn sonar:sonar``` to see the project and its analysis from [http://localhost:9000/projects](http://localhost:9000/projects)
+
 ## Resources
 [https://www.bezkoder.com/spring-boot-thymeleaf-example/](https://www.bezkoder.com/spring-boot-thymeleaf-example/)
 
