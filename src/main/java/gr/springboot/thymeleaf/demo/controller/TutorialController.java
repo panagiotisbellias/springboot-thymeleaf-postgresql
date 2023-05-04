@@ -1,6 +1,7 @@
 package gr.springboot.thymeleaf.demo.controller;
 
 import gr.springboot.thymeleaf.demo.entity.Tutorial;
+import gr.springboot.thymeleaf.demo.entity.TutorialDTO;
 import gr.springboot.thymeleaf.demo.repository.TutorialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -17,13 +18,16 @@ import java.util.List;
 @Controller
 public class TutorialController {
 
+    private static final String MESSAGE = "message";
+    private static final String REDIRECT_HOME_PAGE = "redirect:/tutorials";
+
     @Autowired
     private TutorialRepository tutorialRepository;
 
     @GetMapping("/tutorials")
     public String getAll(Model model, @Param("keyword") String keyword) {
         try {
-            List<Tutorial> tutorials = new ArrayList<Tutorial>();
+            List<Tutorial> tutorials = new ArrayList<>();
 
             if (keyword == null) {
                 tutorialRepository.findAll().forEach(tutorials::add);
@@ -34,7 +38,7 @@ public class TutorialController {
 
             model.addAttribute("tutorials", tutorials);
         } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
+            model.addAttribute(MESSAGE, e.getMessage());
         }
 
         return "tutorials";
@@ -52,31 +56,36 @@ public class TutorialController {
     }
 
     @PostMapping("/tutorials/save")
-    public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
+    public String saveTutorial(TutorialDTO tutorialDTO, RedirectAttributes redirectAttributes) {
         try {
+            Tutorial tutorial = new Tutorial();
+            tutorial.setId(tutorialDTO.getId());
+            tutorial.setLevel(tutorialDTO.getLevel());
+            tutorial.setTitle(tutorialDTO.getTitle());
+            tutorial.setPublished(tutorialDTO.isPublished());
+            tutorial.setDescription(tutorialDTO.getDescription());
             tutorialRepository.save(tutorial);
 
-            redirectAttributes.addFlashAttribute("message", "The Tutorial has been saved successfully!");
+            redirectAttributes.addFlashAttribute(MESSAGE, "The Tutorial has been saved successfully!");
         } catch (Exception e) {
-            redirectAttributes.addAttribute("message", e.getMessage());
+            redirectAttributes.addAttribute(MESSAGE, e.getMessage());
         }
 
-        return "redirect:/tutorials";
+        return REDIRECT_HOME_PAGE;
     }
 
     @GetMapping("/tutorials/{id}")
     public String editTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
         try {
-            Tutorial tutorial = tutorialRepository.findById(id).get();
-
-            model.addAttribute("tutorial", tutorial);
-            model.addAttribute("pageTitle", "Edit Tutorial (ID: " + id + ")");
-
+            tutorialRepository.findById(id).ifPresent(tutorial -> {
+                model.addAttribute("tutorial", tutorial);
+                model.addAttribute("pageTitle", "Edit Tutorial (ID: " + id + ")");
+            });
             return "tutorial_form";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            redirectAttributes.addFlashAttribute(MESSAGE, e.getMessage());
 
-            return "redirect:/tutorials";
+            return REDIRECT_HOME_PAGE;
         }
     }
 
@@ -85,12 +94,12 @@ public class TutorialController {
         try {
             tutorialRepository.deleteById(id);
 
-            redirectAttributes.addFlashAttribute("message", "The Tutorial with id=" + id + " has been deleted successfully!");
+            redirectAttributes.addFlashAttribute(MESSAGE, "The Tutorial with id=" + id + " has been deleted successfully!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            redirectAttributes.addFlashAttribute(MESSAGE, e.getMessage());
         }
 
-        return "redirect:/tutorials";
+        return REDIRECT_HOME_PAGE;
     }
 
     @GetMapping("/tutorials/{id}/published/{status}")
@@ -102,11 +111,11 @@ public class TutorialController {
             String status = published ? "published" : "disabled";
             String message = "The Tutorial id=" + id + " has been " + status;
 
-            redirectAttributes.addFlashAttribute("message", message);
+            redirectAttributes.addFlashAttribute(MESSAGE, message);
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            redirectAttributes.addFlashAttribute(MESSAGE, e.getMessage());
         }
 
-        return "redirect:/tutorials";
+        return REDIRECT_HOME_PAGE;
     }
 }
