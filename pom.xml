@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>gr.springboot</groupId>
 	<artifactId>thymeleaf-demo</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>thymeleaf-demo</name>
 	<description>Spring Boot CRUD example using Thymeleaf template engine for View layer and Spring Data JPA with Database</description>
 	<properties>
